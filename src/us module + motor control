@@ -29,8 +29,7 @@ def forward_drive(speed, angle): #speed is a value from 0 to 1, angle is from -1
         steer_motor.run_target(max_speed, angle, wait=False)
 
 def move(speed, rounds):
-    a = 0
-    while a < rounds*4:
+    while True:
         left_dist = l_us.distance()
         right_dist = r_us.distance() #mm 
 
@@ -43,4 +42,4 @@ def move(speed, rounds):
         angle = 0 - correction + colour_detection()
 
         forward_drive(speed, angle)
-        a+=1 
+
