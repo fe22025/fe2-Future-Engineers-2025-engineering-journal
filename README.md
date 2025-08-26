@@ -1,7 +1,7 @@
 Engineering materials
 ====
 
-This repository contains the source code developed for our robotics project, built using LEGO® SPIKE™ Prime hardware with additional sensors and modules. The vehicle combines modular LEGO motors and sensors with external hardware, allowing for autonomous navigation and real-time object detection.
+This repository contains the source code developed for WRO Future Engineers category 2025, built using LEGO® SPIKE™ Prime hardware with additional sensors and modules. The vehicle combines modular LEGO motors and sensors with external hardware, allowing for autonomous navigation and real-time object detection.
 
 The codebase is organized into the following main modules:
 
