@@ -1,1 +1,35 @@
 
+import sensor
+import time
+import pyb # Import module for board related functions
+import image # Import module containing machine vision algorithms
+
+
+sensor.reset()
+sensor.set_pixformat(sensor.RGB565)
+sensor.set_framesize(sensor.QVGA)
+sensor.skip_frames(time=2000)
+
+clock = time.clock()
+thresholds = [(0, 69, 11, 127, 127, -128), (0, 90, -128, -11, -128, 127)]
+
+
+while True:
+    clock.tick()
+    img = sensor.snapshot()
+    print(clock.fps())
+    blobs = img.find_blobs(thresholds, area_threshold=2500, merge=True)
+
+    red_blobs = [blob for blob in blobs if blob.code() == 1]
+    green_blobs = [blob for blob in blobs if blob.code() == 2]
+
+    if red_blobs:
+        largest_red_blob= max(red_blobs, key=lambda b: b.pixels())
+        img.draw_rectangle(largest_red_blob.rect(), color=(250, 0,0))
+        img.draw_cross(largest_red_blob.cx(), largest_red_blob.cy(), color=(250, 0,0))
+    if green_blobs:
+        largest_green_blob= max(green_blobs, key=lambda b: b.pixels())
+        img.draw_rectangle(largest_green_blob.rect(), color=(22, 153, 8))
+        img.draw_cross(largest_green_blob.cx(), largest_green_blob.cy(), color=(22, 153, 8))
+
+
