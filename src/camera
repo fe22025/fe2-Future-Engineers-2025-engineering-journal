@@ -1,3 +1,5 @@
+openmv cam: 
+
 import sensor
 import time
 import pyb # Import module for board related functions
@@ -51,11 +53,20 @@ while True:
         img.draw_cross(largest_green_blob.cx(), largest_green_blob.cy(), color=(22, 153, 8))
         colour = 2
 
-
-
-
     pr.update_channel('colour', colour)
     pr.process()
     time.sleep_ms(100)
 
+reading from camera:
+
+camera = PUPRemoteHub(Port.B)
+camera.add_channel('colour', to_hub_fmt='b')
+def colour_detection(): 
+    colour = camera.call('colour')
+    if colour == 1:
+        return 45
+    elif colour == 2:
+        return -45
+    else:
+        return 0
 
