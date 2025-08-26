@@ -1,0 +1,32 @@
+   
+
+max_speed = 1000
+right_limit = 27
+left_limit = -24
+
+
+def forward_drive(speed, angle): #speed is a value from 0 to 1, angle is from -180 to 180
+
+        drive_motor.run(-speed*max_speed)
+        if angle > right_limit: #change limit
+            angle = right_limit
+        elif angle < left_limit:
+            angle = left_limit
+        steer_motor.run_target(max_speed, angle, wait=False)
+
+def move(speed, rounds):
+    a = 0
+    while a < rounds*4:
+        left_dist = l_us.distance()
+        right_dist = r_us.distance() #mm 
+
+        # Error is the difference in distance from left and right walls
+        error = right_dist - left_dist  # positive if too close to left wall
+
+        correction = 1.0 * error
+
+        # Adjust the base angle 
+        angle = 0 - correction + colour_detection()
+
+        forward_drive(speed, angle)
+        a+=1 
